@@ -284,7 +284,7 @@ class GridLayout(Layout):
         # and determine if they have stretch or not
         current_cols = self.cols
         current_rows = self.rows
-        children = self.children
+        children = self.children[:]
         len_children = len(children)
 
         # if no cols or rows are set, we can't calculate minimum size.
@@ -368,7 +368,7 @@ class GridLayout(Layout):
         if self.cols is None and self.rows is None:
             raise GridLayoutException('Need at least cols or rows constraint.')
 
-        children = self.children
+        children = self.children[:]
         len_children = len(children)
         if len_children == 0:
             return
