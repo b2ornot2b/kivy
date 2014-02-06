@@ -342,6 +342,7 @@ class ScrollView(StencilView):
         self._trigger_update_from_scroll = Clock.create_trigger(
             self.update_from_scroll, -1)
         super(ScrollView, self).__init__(**kwargs)
+        self.scrollbar_animate = kwargs.get('scrollbar_animate', False)
         if self.effect_x is None and self.effect_cls is not None:
             self.effect_x = self.effect_cls(target_widget=self._viewport)
         if self.effect_y is None and self.effect_cls is not None:
@@ -622,9 +623,10 @@ class ScrollView(StencilView):
         # new in 1.2.0, show bar when scrolling happen
         # and slowly remove them when no scroll is happening.
         self.bar_alpha = 1.
-        Animation.stop_all(self, 'bar_alpha')
-        Clock.unschedule(self._start_decrease_alpha)
-        Clock.schedule_once(self._start_decrease_alpha, .5)
+        if self.scrollbar_animate is True:
+            Animation.stop_all(self, 'bar_alpha')
+            Clock.unschedule(self._start_decrease_alpha)
+            Clock.schedule_once(self._start_decrease_alpha, .5)
 
     def _start_decrease_alpha(self, *l):
         self.bar_alpha = 1.
