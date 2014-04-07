@@ -949,6 +949,7 @@ class ListView(AbstractView, EventDispatcher):
         self.adapter.data = self.item_strings
 
     def _scroll(self, scroll_y):
+        #print '_scroll: ', scroll_y
         if self.row_height is None:
             return
         self._scroll_y = scroll_y

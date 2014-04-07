@@ -248,7 +248,7 @@ class ScrollView(StencilView):
     :data:`vbar` is a :class:`~kivy.properties.AliasProperty`, readonly.
     '''
 
-    bar_color = ListProperty([.7, .7, .7, .9])
+    bar_color = ListProperty([0., 0., 0., 1.])
     '''Color of horizontal / vertical scroll bar, in RGBA format.
 
     .. versionadded:: 1.2.0
@@ -338,11 +338,11 @@ class ScrollView(StencilView):
             self.viewport_size = value.size
 
     def __init__(self, **kwargs):
+        self.scrollbar_animate = kwargs.get('scrollbar_animate', False)
         self._touch = None
         self._trigger_update_from_scroll = Clock.create_trigger(
             self.update_from_scroll, -1)
         super(ScrollView, self).__init__(**kwargs)
-        self.scrollbar_animate = kwargs.get('scrollbar_animate', False)
         if self.effect_x is None and self.effect_cls is not None:
             self.effect_x = self.effect_cls(target_widget=self._viewport)
         if self.effect_y is None and self.effect_cls is not None:
@@ -622,8 +622,8 @@ class ScrollView(StencilView):
 
         # new in 1.2.0, show bar when scrolling happen
         # and slowly remove them when no scroll is happening.
-        self.bar_alpha = 1.
         if self.scrollbar_animate is True:
+            self.bar_alpha = 1.
             Animation.stop_all(self, 'bar_alpha')
             Clock.unschedule(self._start_decrease_alpha)
             Clock.schedule_once(self._start_decrease_alpha, .5)

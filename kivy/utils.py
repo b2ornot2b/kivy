@@ -245,7 +245,7 @@ class Platform(object):
     # with module variable
     _platform = None
 
-    @deprecated
+    #b2ornot2b: @deprecated
     def __call__(self):
         return self._get_platform()
 
