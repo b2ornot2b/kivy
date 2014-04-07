@@ -9,7 +9,10 @@ from copy import deepcopy
 import os
 from os.path import join, dirname, sep, exists, basename
 from os import walk, environ
-from distutils.core import setup
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 from distutils.extension import Extension
 from collections import OrderedDict
 
